@@ -11,7 +11,7 @@ const Transaction = sequelize.define('Transaction', {
     allowNull: false,
   },
   type: {
-    type: DataTypes.ENUM('income', 'expense'),
+    type: DataTypes.ENUM('pemasukan', 'pengeluaran'), // ENUM pilihan tetap
     allowNull: false,
   },
   description: {

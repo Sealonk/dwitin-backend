@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/config');  // Pastikan ini mengarah ke koneksi yang benar
+const sequelize = require('../config/config'); // Pastikan koneksi sequelize diimpor dengan benar
+const Transaction = require('./transaction'); // Impor model Transaction
 
 const User = sequelize.define('User', {
   name: {
@@ -27,6 +28,14 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     defaultValue: 'en',
   },
+  balance: {
+    type: DataTypes.FLOAT,
+    defaultValue: 0, // Default saldo awal 0
+  },
 });
+
+// Definisi relasi
+Transaction.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Transaction, { foreignKey: 'userId', as: 'transactions' });
 
 module.exports = User;

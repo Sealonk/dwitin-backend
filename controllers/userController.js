@@ -15,6 +15,7 @@ const getUserProfile = async (req, res) => {
       profileImage: user.profileImage,
       darkMode: user.darkMode,
       language: user.language,
+      balance: user.balance, // Sertakan saldo pengguna
     });
   } catch (error) {
     res.status(500).json({ error: 'Error fetching user profile' });
