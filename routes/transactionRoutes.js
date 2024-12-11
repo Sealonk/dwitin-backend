@@ -1,9 +1,11 @@
 const express = require('express');
 const multer = require('multer');
-const { addTransactionWithImage,
+const {
+    addTransactionWithImage,
     getUserTransactions,
     getTransactionById,
-    deleteTransactionById } = require('../controllers/transactionController');
+    deleteTransactionById
+} = require('../controllers/transactionController');
 const authenticateToken = require('../middleware/auth');
 
 const router = express.Router();

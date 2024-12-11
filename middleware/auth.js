@@ -13,9 +13,8 @@ const authenticateToken = (req, res, next) => {
       return res.status(403).json({ message: 'Invalid token' });
     }
 
-    // Simpan userId di req.user
-    req.user = { id: user.userId };
-    console.log('Decoded User:', req.user); // Debugging log
+    req.user = { id: user.userId }; // Pastikan userId diambil dari token payload
+    console.log('Decoded User:', req.user); // Debugging
     next();
   });
 };

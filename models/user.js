@@ -17,8 +17,8 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   profileImage: {
-    type: DataTypes.STRING,
-    defaultValue: null,
+    type: DataTypes.STRING, // URL gambar
+    defaultValue: null, // Default null jika tidak ada gambar
   },
   darkMode: {
     type: DataTypes.BOOLEAN,
@@ -30,7 +30,7 @@ const User = sequelize.define('User', {
   },
   balance: {
     type: DataTypes.FLOAT,
-    defaultValue: 0, // Default saldo awal 0
+    defaultValue: 0,
   },
 });
 
