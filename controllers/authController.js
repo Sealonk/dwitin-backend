@@ -1,12 +1,12 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const bcrypt = require('bcryptjs'); // Library for hashing passwords
+const jwt = require('jsonwebtoken'); // Library for creating JWT tokens
+const User = require('../models/user'); // Import User model
 
-// Register User
+// Controller to handle user registration
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
-  // Validasi input
+  // Validate the input fields
   if (!email || !password || !name) {
     return res.status(400).json({ error: true, message: 'All fields are required' });
   }
@@ -16,16 +16,16 @@ const registerUser = async (req, res) => {
   }
 
   try {
-    // Mengecek apakah email sudah terdaftar
+    // Check if the email is already registered
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({ error: true, message: 'Email is already taken' });
     }
 
-    // Mengenkripsi password sebelum disimpan
+    // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Membuat pengguna baru
+    // Create a new user in the database
     const user = await User.create({
       name,
       email,
@@ -38,37 +38,37 @@ const registerUser = async (req, res) => {
       message: 'User Created',
     });
   } catch (error) {
-    console.error('Error registering user:', error);
+    console.error('Error registering user:', error); // Log the error for debugging
     return res.status(500).json({ error: true, message: 'Error registering user' });
   }
 };
 
-// Login User
+// Controller to handle user login
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  // Validasi input
+  // Validate the input fields
   if (!email || !password) {
     return res.status(400).json({ error: true, message: 'Email and password are required' });
   }
 
   try {
-    // Mengecek apakah email terdaftar
+    // Check if the user exists
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(400).json({ error: true, message: 'User not found' });
     }
 
-    // Memeriksa kecocokan password
+    // Validate the password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: true, message: 'Invalid password' });
     }
 
-    // Membuat token JWT
+    // Create a JWT token for the user
     const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    // Menyusun respons login
+    // Login response
     const loginResult = {
       userId: user.id,
       name: user.name,
@@ -81,12 +81,12 @@ const loginUser = async (req, res) => {
       loginResult: loginResult,
     });
   } catch (error) {
-    console.error('Error logging in user:', error);
+    console.error('Error logging in user:', error); // Log the error for debugging
     return res.status(500).json({ error: true, message: 'Error logging in' });
   }
 };
 
-// Pastikan Anda mengekspor fungsi dengan benar
+// Export the controllers
 module.exports = {
   registerUser,
   loginUser,

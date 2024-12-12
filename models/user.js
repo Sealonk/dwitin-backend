@@ -1,41 +1,42 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/config'); // Pastikan koneksi sequelize diimpor dengan benar
-const Transaction = require('./transaction'); // Impor model Transaction
+const { DataTypes } = require('sequelize'); // DataTypes for defining Sequelize models
+const sequelize = require('../config/config'); // Import the Sequelize connection
+const Transaction = require('./transaction'); // Import the Transaction model
 
+// Define the User model
 const User = sequelize.define('User', {
   name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: DataTypes.STRING, // User's name
+    allowNull: false, // Cannot be null
   },
   email: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
+    type: DataTypes.STRING, // User's email
+    unique: true, // Must be unique
+    allowNull: false, // Cannot be null
   },
   password: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: DataTypes.STRING, // User's hashed password
+    allowNull: false, // Cannot be null
   },
   profileImage: {
-    type: DataTypes.STRING, // URL gambar
-    defaultValue: null, // Default null jika tidak ada gambar
+    type: DataTypes.STRING, // URL of the user's profile image
+    defaultValue: null, // Default is null if no image is uploaded
   },
   darkMode: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
+    type: DataTypes.BOOLEAN, // Whether dark mode is enabled
+    defaultValue: false, // Default is false
   },
   language: {
-    type: DataTypes.STRING,
-    defaultValue: 'en',
+    type: DataTypes.STRING, // User's preferred language
+    defaultValue: 'en', // Default is 'en'
   },
   balance: {
-    type: DataTypes.FLOAT,
-    defaultValue: 0,
+    type: DataTypes.FLOAT, // User's account balance
+    defaultValue: 0, // Default balance is 0
   },
 });
 
-// Definisi relasi
-Transaction.belongsTo(User, { foreignKey: 'userId', as: 'user' });
-User.hasMany(Transaction, { foreignKey: 'userId', as: 'transactions' });
+// Define relationships between models
+Transaction.belongsTo(User, { foreignKey: 'userId', as: 'user' }); // A transaction belongs to a user
+User.hasMany(Transaction, { foreignKey: 'userId', as: 'transactions' }); // A user has many transactions
 
-module.exports = User;
+module.exports = User; // Export the User model
