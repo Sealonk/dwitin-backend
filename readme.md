@@ -55,6 +55,8 @@ GOOGLE_CLOUD_PROJECT=your_google_cloud_project_id
 GOOGLE_APPLICATION_CREDENTIALS=./credentials/service-account-key.json
 ```
 
+## Credential Variables
+
 - The following credential variables must be defined in a ./credentials/`serviceAccountKey.json` file:
 
 ```json
