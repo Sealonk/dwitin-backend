@@ -42,7 +42,7 @@ Before you begin, ensure you have the following:
 
 ## Environment Variables
 
-The following environment variables must be defined in a `.env` file:
+- The following environment variables must be defined in a `.env` file:
 
 ```plaintext
 PORT=5000
@@ -53,6 +53,23 @@ DB_PASS=your_database_password
 DB_NAME=your_database_name
 GOOGLE_CLOUD_PROJECT=your_google_cloud_project_id
 GOOGLE_APPLICATION_CREDENTIALS=./credentials/service-account-key.json
+```
+
+- The following credential variables must be defined in a ./credentials/`serviceAccountKey.json` file:
+
+```json
+{
+    "type": "service_account",
+    "project_id": "your_project_id",
+    "private_key_id": "your_private_key_id",
+    "private_key": "your_private_key",
+    "client_email": "your_client_email",
+    "client_id": "your_client_id",
+    "auth_uri": "your_auth_uri",
+    "token_uri": "your_token_uri",
+    "auth_provider_x509_cert_url": "your_auth_provider_x509_cert_url",
+    "client_x509_cert_url": "your_client_cert_url"
+}
 ```
 
 ## Getting Started
